@@ -1,4 +1,5 @@
 from datetime import date, timedelta
+import requests
 
 class Student:
     """ a Student class as base of method testing """
@@ -30,3 +31,12 @@ class Student:
 
     def apply_extension(self, days):
         self.end_date = self.end_date + timedelta(days=days)
+
+    def course_schedule(self):
+        response = requests.get(
+            f"https://company.com/course-schedule/{self._last_name}/{self._first_name}")
+
+        if response.ok:
+            return response.text
+        else:
+            return "Something went wrong with the request!"
